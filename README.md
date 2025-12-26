@@ -21,7 +21,7 @@ Le dipendenze (franka_ros, MoveIt, gazebo_ros_link_attacher, ecc.) si installano
 ## 0) Prerequisiti
 Installa ROS Noetic e catkin_tools se non li hai già.
 
-```bash
+bash
 sudo apt update
 sudo apt install -y \
   ros-noetic-desktop-full \
@@ -33,12 +33,12 @@ rosdep update
 Apri il tuo .bashrc e assicurati di avere:
 source /opt/ros/noetic/setup.bash
 
-1) Crea workspace (catkin build)
+## 1) Crea workspace (catkin build)
 mkdir -p ~/franka_ws/src
 cd ~/franka_ws
 catkin init
 
-2) Dipendenze APT (MoveIt, Gazebo, OpenCV, bridge ROS)
+## 2) Dipendenze APT (MoveIt, Gazebo, OpenCV, bridge ROS)
 sudo apt update
 sudo apt install -y \
   ros-noetic-moveit \
@@ -46,7 +46,7 @@ sudo apt install -y \
   ros-noetic-cv-bridge ros-noetic-image-transport \
   python3-opencv python3-numpy
 
-3) Clona dipendenze nella cartella src
+## 3) Clona dipendenze nella cartella src
 cd ~/franka_ws/src
 
 # franka_ros (simulazione Panda in Gazebo)
@@ -55,7 +55,7 @@ git clone https://github.com/frankaemika/franka_ros.git
 # gazebo link attacher (serve per "attaccare" e "staccare" i cubi al gripper in Gazebo)
 git clone https://github.com/pal-robotics/gazebo_ros_link_attacher.git
 
-4) Clona questa repo e aggiungi il package trash_sorter
+## 4) Clona questa repo e aggiungi il package trash_sorter
 
 NOTA: il workspace deve contenere una cartella trash_sorter/ (package ROS).
 Questa repo è fatta apposta per essere copiata dentro ~/franka_ws/src/.
@@ -69,7 +69,7 @@ cp -r trash-sorter-SR/trash_sorter ~/franka_ws/src/
 # Permessi esecuzione sugli script
 chmod +x ~/franka_ws/src/trash_sorter/scripts/*.py
 
-5) IMPORTANTISSIMO: modifica manuale controller (senza patch)
+## 5) IMPORTANTISSIMO: modifica manuale controller (senza patch)
 
 Per ridurre abort intermittenti tipo:
 
@@ -106,7 +106,7 @@ position_joint_trajectory_controller:
     $(arg arm_id)_joint6: { goal: 0.12, trajectory: 0.30 }
     $(arg arm_id)_joint7: { goal: 0.12, trajectory: 0.30 }
 
-6) Installa dipendenze con rosdep e builda
+## 6) Installa dipendenze con rosdep e builda
 cd ~/franka_ws
 rosdep install --from-paths src --ignore-src -r -y
 catkin build
@@ -116,28 +116,23 @@ Consiglio: aggiungi al .bashrc (così non lo fai a mano ogni volta):
 
 echo "source ~/franka_ws/devel/setup.bash" >> ~/.bashrc
 
-7) Avvio simulazione (Gazebo + Panda + MoveIt)
+## 7) Avvio simulazione (Gazebo + Panda + MoveIt)
 Consigliato (super stabile): world senza tavoli
 roslaunch trash_sorter demo_gazebo_trash_world_arg.launch pipeline:=pilz_industrial_motion_planner
 
-8) Avvio script sorting
-
+## 8) Avvio script sorting
 In un nuovo terminale:
+  source ~/franka_ws/devel/setup.bash
+  rosrun trash_sorter move_test.py
 
-source ~/franka_ws/devel/setup.bash
-rosrun trash_sorter move_test.py
-
-Topic / Service principali
+## Topic / Service principali
 Overhead Camera (ordine cubi)
 
-Topic immagine:
-
+## Topic immagine:
 /overhead_camera/image_raw
 
-Gazebo link attacher (attach/detach cubi)
+## Gazebo link attacher (attach/detach cubi)
 
-Service:
-
+## Service:
 /link_attacher_node/attach
-
 /link_attacher_node/detach
