@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- MoveIt pipeline -->
+  <arg name="pipeline" default="ompl"/>
+
+  <!-- Panda options -->
+  <arg name="load_gripper" default="true" />
+  <arg name="transmission" default="position" />
+
+  <!-- Gazebo options -->
+  <arg name="gazebo_gui" default="true" />
+  <arg name="paused" default="false" />
+
+  <!-- World -->
+  <arg name="world" default="$(find trash_sorter)/worlds/trash_sorter.world"/>
+
+  <!-- Gazebo + Panda -->
+  <include file="$(find franka_gazebo)/launch/panda.launch" pass_all_args="true">
+    <arg name="headless" value="$(eval not arg('gazebo_gui'))" />
+    <arg name="use_gripper" value="$(arg load_gripper)" />
+    <arg name="controller" value="$(arg transmission)_joint_trajectory_controller" />
+    <arg name="world" value="$(arg world)" />
+  </include>
+
+  <!-- MoveIt -->
+  <include file="$(find panda_moveit_config)/launch/demo.launch" pass_all_args="true">
+    <arg name="pipeline" value="$(arg pipeline)" />
+    <arg name="load_robot_description" value="false" />
+    <arg name="moveit_controller_manager" value="simple" />
+  </include>
+
+  <!-- Override Pilz cartesian limits (must be >0) -->
+  <rosparam ns="robot_description_planning"
+            file="$(find trash_sorter)/config/pilz_cartesian_limits.yaml"
+            command="load"/>
+</launch>
