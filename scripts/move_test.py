@@ -23,7 +23,7 @@ from cv_bridge import CvBridge
 # PARAMETRI MONDO
 # ===============================
 OBJ_DIAMETERS = {
-    "orange":   0.055,  # ora: TRAPANO (ma manteniamo nome per compatibilità)
+    "orange":   0.058,        # Orange      
     "plastic_bottle": 0.050,  # Coke
     "carton_pack":    0.050,  # Latte
 }
@@ -31,7 +31,7 @@ OBJ_DIAMETERS = {
 # Offset di discesa (quanto sopra il centro modello andare per chiudere)
 # Per il trapano sdraiato conviene stare un filo più alto
 OBJ_Z_GRAB_OFFSET = {
-    "orange":   0.12,   # trapano
+    "orange":   0.12,         # orange
     "plastic_bottle": 0.06,   # lattina
     "carton_pack":    0.03,   # cartone
 }
