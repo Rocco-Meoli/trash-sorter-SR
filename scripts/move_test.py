@@ -23,7 +23,7 @@ from cv_bridge import CvBridge
 # PARAMETRI MONDO
 # ===============================
 OBJ_DIAMETERS = {
-    "orange":   0.058,        # Orange      
+    "orange":   0.055,        # Orange      
     "plastic_bottle": 0.050,  # Coke
     "carton_pack":    0.050,  # Latte
 }
@@ -31,15 +31,15 @@ OBJ_DIAMETERS = {
 # Offset di discesa (quanto sopra il centro modello andare per chiudere)
 # Per il trapano sdraiato conviene stare un filo più alto
 OBJ_Z_GRAB_OFFSET = {
-    "orange":   0.12,         # orange
+    "orange":   0.13,         # orange
     "plastic_bottle": 0.06,   # lattina
-    "carton_pack":    0.03,   # cartone
+    "carton_pack":    0.02,   # cartone
 }
 
 # Offset centro-presa SOLO per arancia (glass_bottle) in metri
 # Y negativo = più a sinistra (nel tuo mondo)
 ORANGE_PICK_DX = 0.00    # es. 0.01 = 1 cm in avanti
-ORANGE_PICK_DY = -0.015   # es. -0.02 = 2 cm verso sinistra
+ORANGE_PICK_DY = -0.019   # es. -0.02 = 2 cm verso sinistra
 
 
 GAZEBO_ATTACH_LINK = "panda_link7"
